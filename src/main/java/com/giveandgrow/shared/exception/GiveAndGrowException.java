@@ -7,30 +7,30 @@ import lombok.Getter;
 import java.io.Serial;
 
 @Getter
-public class ProfileUserException extends RuntimeException{
+public class GiveAndGrowException extends RuntimeException{
 
 	@Serial
 	private static final long serialVersionUID = 1L;
 	protected String userMessage;
 	protected LocationException locationException;
 
-	public ProfileUserException(LocationException locationException) {
+	public GiveAndGrowException(LocationException locationException) {
 		setLocationException(locationException);
 	}
 
-	public ProfileUserException(String technicalMessage, String userMessage, LocationException locationException, Throwable rootException) {
+	public GiveAndGrowException(String technicalMessage, String userMessage, LocationException locationException, Throwable rootException) {
 		super(technicalMessage, rootException);
 		setMessageUser(userMessage);
 		setLocationException(locationException);
 	}
 
-	public ProfileUserException(final String userMessage, final LocationException locationException) {
+	public GiveAndGrowException(final String userMessage, final LocationException locationException) {
 		super(userMessage);
 		setMessageUser(userMessage);
 		setLocationException(locationException);
 	}
 
-	public ProfileUserException(String technicalMessage, String userMessage, LocationException locationException) {
+	public GiveAndGrowException(String technicalMessage, String userMessage, LocationException locationException) {
 		super(technicalMessage);
 		setMessageUser(userMessage);
 		setLocationException(locationException);

@@ -9,6 +9,8 @@ public interface UserRepositoryPort {
 
     void save(UserDomain patient);
 
+    UserDomain update(UserDomain patient);
+
     Optional<UserDomain> findById(UUID id);
 
     List<UserDomain> findAll();

@@ -1,26 +1,26 @@
 package com.giveandgrow.shared.exception.custom;
 
 
-import com.giveandgrow.shared.exception.ProfileUserException;
+import com.giveandgrow.shared.exception.GiveAndGrowException;
 import com.giveandgrow.shared.exception.enums.LocationException;
 
 import java.io.Serial;
 
-public class ControllerProfileUserException extends ProfileUserException {
+public class ControllerGiveAndGrowException extends GiveAndGrowException {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private static final LocationException location = LocationException.CONTROLLER;
 
-	public ControllerProfileUserException(final String userMessage) {
+	public ControllerGiveAndGrowException(final String userMessage) {
 		super(userMessage, location);
 	}
 
-	public ControllerProfileUserException(final String technicalMessage, final String userMessage) {
+	public ControllerGiveAndGrowException(final String technicalMessage, final String userMessage) {
 		super(technicalMessage, userMessage, location);
 	}
 
-	public ControllerProfileUserException(final String technicalMessage, final String userMessage,
+	public ControllerGiveAndGrowException(final String technicalMessage, final String userMessage,
 										  final Throwable rootException) {
 		super(technicalMessage, userMessage, location, rootException);
 	}

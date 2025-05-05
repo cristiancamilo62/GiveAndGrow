@@ -1,14 +1,13 @@
 package com.giveandgrow.domain.model.user;
 
+import com.giveandgrow.domain.model.security.Role;
 import com.giveandgrow.shared.helper.ObjectHelper;
 import com.giveandgrow.shared.helper.TextHelper;
 import com.giveandgrow.shared.helper.UuidHelper;
 import lombok.Getter;
-import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Getter
-@Service
 public class UserDomain {
 
 	private UUID id;
@@ -35,7 +34,7 @@ public class UserDomain {
 
 	private boolean accountStatement;
 
-	private String role;
+	private final Role role;
 
 
 	public UserDomain() {
@@ -51,16 +50,13 @@ public class UserDomain {
         setConfirmedPhoneNumber(false);
         setPassword(TextHelper.EMPTY);
         setAccountStatement(false);
-        setRole(TextHelper.EMPTY);
+        this.role = Role.ROLE_USER;
 	}
-
-
-
 
 	public UserDomain(UUID id, String identification, String firstName, String middleName, String lastName,
 					  String middleLastName, String email, boolean confirmedEmail, String phoneNumber,
 					  boolean confirmedPhoneNumber, String password,
-					  boolean accountStatement, String role) {
+					  boolean accountStatement) {
 		setId(id);
 		setIdentification(identification);
 		setFirstName(firstName);
@@ -73,7 +69,7 @@ public class UserDomain {
 		setConfirmedPhoneNumber(confirmedPhoneNumber);
 		setPassword(password);
 		setAccountStatement(accountStatement);
-		setRole(role);
+		this.role = Role.ROLE_USER;
 	}
 
 	public final void setId(UUID id) {
@@ -124,7 +120,4 @@ public class UserDomain {
 		this.accountStatement = ObjectHelper.getDefault(accountStatement, false);
 	}
 
-	public final void setRole(String role) {
-		this.role = ObjectHelper.getDefault(TextHelper.applyTrim(role), TextHelper.EMPTY);
-	}
 }

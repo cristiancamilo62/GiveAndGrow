@@ -21,7 +21,7 @@ public final class GenericValidationDataStructure {
 
     public void validateDataNotNullOrEmpty(Object value, String dataName){
         //TODO : organizar
-        if(ObjectHelper.isNull(value)){
+        if(ObjectHelper.isNull(value) || ObjectHelper.isEmpty(value)){
             String userMessage = dataName + MessageCatalog.getContentMessage(MessageCode.M0000004);
             throw new EmptyOrNullDataRuleValidatorException(userMessage);
         }
@@ -44,6 +44,13 @@ public final class GenericValidationDataStructure {
     public void validateFormatDataOnlyLettersAndDigits(String value, String dataName) {
         if(!TextHelper.containsOnlyLettersDigits(value)){
             String userMessage = dataName + MessageCatalog.getContentMessage(MessageCode.M0000006);
+            throw new InvalidFormatDataRuleValidatorException(userMessage);
+        }
+    }
+
+    public void validateFormatDataOnlyLettersAndDigitsAtSpace(String value, String dataName) {
+        if(!TextHelper.containsOnlyLettersDigitsSpaces(value)){
+            String userMessage = dataName + MessageCatalog.getContentMessage(MessageCode.M0000020);
             throw new InvalidFormatDataRuleValidatorException(userMessage);
         }
     }

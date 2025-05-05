@@ -1,6 +1,6 @@
 package com.giveandgrow.shared.messages;
 
-import com.giveandgrow.shared.exception.custom.SharedProfileUserException;
+import com.giveandgrow.shared.exception.custom.SharedGiveAndGrowException;
 import com.giveandgrow.shared.helper.ObjectHelper;
 import com.giveandgrow.shared.messages.enums.MessageCategory;
 import com.giveandgrow.shared.messages.enums.MessageCode;
@@ -64,7 +64,7 @@ public class MessageCatalog {
 				"is the default value."));
 
 		addMessage(Message.create(MessageCode.M0000013, MessageType.USER, MessageCategory.ERROR,
-				"A client with that email already exists."));
+				"A client with the same email already exists."));
 
 		addMessage(Message.create(MessageCode.M0000014, MessageType.TECHNICAL, MessageCategory.ERROR,
 				"A client with the same identifier already exists. UUID generator created an existing customer ID"));
@@ -73,10 +73,22 @@ public class MessageCatalog {
 				"A client with the same identification number already exists."));
 
 		addMessage(Message.create(MessageCode.M0000016, MessageType.TECHNICAL, MessageCategory.ERROR,
-				"User not found with ID : ."));
+				" id does not exist in the database."));
 
 		addMessage(Message.create(MessageCode.M0000017, MessageType.USER, MessageCategory.ERROR,
 				"An unexpected error occurred."));
+
+		addMessage(Message.create(MessageCode.M0000018, MessageType.USER, MessageCategory.ERROR,
+				"Organization contact number already exists"));
+
+		addMessage(Message.create(MessageCode.M0000019, MessageType.USER, MessageCategory.ERROR,
+				"Organization email already exists"));
+
+		addMessage(Message.create(MessageCode.M0000020, MessageType.USER, MessageCategory.ERROR,
+				"must contain only letters, digits and spaces"));
+
+
+		
 
 	}
     
@@ -88,13 +100,13 @@ public class MessageCatalog {
 		if(ObjectHelper.isNull(code)) {
 			var messageUser = getContentMessage(MessageCode.M0000003);
 			var messageTechnical = getContentMessage(MessageCode.M0000001);
-			throw new SharedProfileUserException(messageUser,messageTechnical);
+			throw new SharedGiveAndGrowException(messageUser,messageTechnical);
 		}
 		
 		if(!MESSAGES.containsKey(code)) {
 			var messageUser = getContentMessage(MessageCode.M0000003);
 			var messageTechnical = getContentMessage(MessageCode.M0000002);
-			throw new SharedProfileUserException(messageTechnical,messageUser);
+			throw new SharedGiveAndGrowException(messageTechnical,messageUser);
 		}
 		
 		return MESSAGES.get(code);

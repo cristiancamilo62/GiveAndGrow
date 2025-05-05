@@ -1,6 +1,6 @@
 package com.giveandgrow.domain.model.user.rules.executor;
 
-import com.giveandgrow.domain.model.ValidationRule;
+import com.giveandgrow.domain.model.GenericValidationRule;
 import com.giveandgrow.domain.model.user.UserDomain;
 import com.giveandgrow.domain.model.user.rules.business.UserEmailAlreadyExistBusinessRule;
 import com.giveandgrow.domain.model.user.rules.business.UserIdentificationAlreadyExistBusinessRule;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ValidationsRuleExecutor implements ValidationRule<UserDomain> {
+public class UserValidationsRuleExecutor implements GenericValidationRule<UserDomain> {
 
     private final IdUserRuleValidator idUserRuleValidator;
 

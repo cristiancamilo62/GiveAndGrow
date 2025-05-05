@@ -1,14 +1,12 @@
 package com.giveandgrow.infrastructure.rest.controllers;
 
 import com.giveandgrow.application.dto.UserDTO;
-import com.giveandgrow.application.mapper.UserMapperDTO;
-import com.giveandgrow.application.services.UserService;
-import com.giveandgrow.shared.exception.ProfileUserException;
+import com.giveandgrow.domain.ports.input.UserServicePort;
+import com.giveandgrow.shared.exception.GiveAndGrowException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,11 +14,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/users")
-public class PatientController {
+public class UserController {
 
-    private final UserService userService;
-
-    private final UserMapperDTO userMapperDTO;
+    private final UserServicePort userService;
 
     @GetMapping("/dummy")
     public UserDTO obtain() {
@@ -30,9 +26,9 @@ public class PatientController {
     @PostMapping("/r")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
-            userService.createPatient(userMapperDTO.toDomain(userDTO));
+            userService.createPatient(userDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Your account has been created successfully");
-        } catch (ProfileUserException exception) {
+        } catch (GiveAndGrowException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -42,10 +38,10 @@ public class PatientController {
 
         try {
 
-            userService.updatePatient(userMapperDTO.toDomain(userDTO));
+            userService.updatePatient(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body("Your account has been updated successfully");
 
-        } catch (ProfileUserException exception) {
+        } catch (GiveAndGrowException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -57,7 +53,7 @@ public class PatientController {
             userService.deletePatient(idUser);
             return ResponseEntity.status(HttpStatus.OK).body("Your account has been deleted successfully");
 
-        } catch (ProfileUserException exception) {
+        } catch (GiveAndGrowException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -71,7 +67,7 @@ public class PatientController {
             return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(null));
 
-        } catch (ProfileUserException exception) {
+        } catch (GiveAndGrowException exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);  // Retorna 500 si ocurre una excepción interna
         }
@@ -86,7 +82,7 @@ public class PatientController {
 
             return ResponseEntity.status(HttpStatus.OK).body(users);
 
-        }catch (ProfileUserException exception){
+        }catch (GiveAndGrowException exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }

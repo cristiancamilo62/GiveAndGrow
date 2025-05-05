@@ -1,8 +1,8 @@
 package com.giveandgrow.shared.validators.exceptions;
 
-import com.giveandgrow.shared.exception.custom.SharedProfileUserException;
+import com.giveandgrow.shared.exception.custom.SharedGiveAndGrowException;
 
-public class InvalidLengthDataRuleValidatorException extends SharedProfileUserException {
+public class InvalidLengthDataRuleValidatorException extends SharedGiveAndGrowException {
 
     public InvalidLengthDataRuleValidatorException(String userMessage) {
         super(userMessage);

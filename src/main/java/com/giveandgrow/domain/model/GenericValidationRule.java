@@ -1,6 +1,6 @@
 package com.giveandgrow.domain.model;
 
-public interface ValidationRule<T> {
+public interface GenericValidationRule<T> {
 	
 	void validate(T data);
 

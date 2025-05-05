@@ -1,12 +1,12 @@
 	package com.giveandgrow.domain.model.user.rules.validation;
 
-    import com.giveandgrow.domain.model.ValidationRule;
+    import com.giveandgrow.domain.model.GenericValidationRule;
 	import com.giveandgrow.domain.model.user.UserDomain;
 	import com.giveandgrow.shared.validators.structure.GenericValidationDataStructure;
 	import org.springframework.stereotype.Service;
 
 	@Service
-	public class NameUserRuleValidator implements ValidationRule<UserDomain> {
+	public class NameUserRuleValidator implements GenericValidationRule<UserDomain> {
 
 		public static final String FIELD_NAME_FIRST_NAME= "first name ";
 		public static final String FIELD_NAME_MIDDLE_NAME = "middle name ";

@@ -1,11 +1,11 @@
 package com.giveandgrow.domain.model.user.rules.validation;
 
-import com.giveandgrow.domain.model.ValidationRule;
+import com.giveandgrow.domain.model.GenericValidationRule;
 import com.giveandgrow.shared.validators.structure.GenericValidationDataStructure;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IdentificationUserRuleValidator implements ValidationRule<String> {
+public class IdentificationUserRuleValidator implements GenericValidationRule<String> {
 
 	public static final String FIELD_NAME_IDENTIFICATION = "Identification ";
 	private final GenericValidationDataStructure genericValidationDataStructure;

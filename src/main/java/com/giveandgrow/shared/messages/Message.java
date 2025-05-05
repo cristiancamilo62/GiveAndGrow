@@ -1,7 +1,7 @@
 package com.giveandgrow.shared.messages;
 
 
-import com.giveandgrow.shared.exception.custom.SharedProfileUserException;
+import com.giveandgrow.shared.exception.custom.SharedGiveAndGrowException;
 import com.giveandgrow.shared.helper.ObjectHelper;
 import com.giveandgrow.shared.messages.enums.MessageCategory;
 import com.giveandgrow.shared.messages.enums.MessageCode;
@@ -34,7 +34,7 @@ public class Message {
 		if(ObjectHelper.isNull(code)) {
 			var messageUser = MessageCatalog.getContentMessage(MessageCode.M0000003);
 			var messageTechnical = MessageCatalog.getContentMessage(MessageCode.M0000004);
-			throw new SharedProfileUserException(messageTechnical,messageUser);
+			throw new SharedGiveAndGrowException(messageTechnical,messageUser);
 			
 		}
 		this.code = code;
