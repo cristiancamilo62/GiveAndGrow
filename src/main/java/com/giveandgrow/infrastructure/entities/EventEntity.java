@@ -42,6 +42,9 @@ public class EventEntity {
     @Column(name = "location")  
     private String location;
 
+    @Column(name= "category")
+    private String category;
+
     @Column(name= "max_participants")
     private Integer maxParticipants;
 

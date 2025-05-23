@@ -1,5 +1,6 @@
 package com.giveandgrow.application.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import com.giveandgrow.domain.model.event.EventDomain;
 import com.giveandgrow.domain.ports.input.EventServicePort;
 import com.giveandgrow.domain.ports.output.EventRepositoryPort;
 import com.giveandgrow.shared.validators.structure.GenericValidationDataStructure;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -74,12 +74,30 @@ public class EventService implements EventServicePort {
     }
 
     @Override
+    public List<EventDTO> getEventsByCategory(String category) {
+        
+        genericValidationDataStructure.validateDataNotNullOrEmpty(category, "Category");
+
+        return eventMapperDTO.toDTOList(eventRepositoryPort.findByCategory(category));
+    }
+
+    @Override
     public List<EventDTO> getAllEventsByUser(UUID userId) {
        
         genericValidationDataStructure.validateDataNotNullOrEmpty(userId, "Id User");
 
         return eventMapperDTO.toDTOList(eventRepositoryPort.findAllEventsByUser(userId));
     }
+
+    @Override
+    public List<EventDTO> getEventsByLocationAndStartDateTimeAndCategory(String location, LocalDateTime startDateTime,
+            String category) {
+        
+            return eventMapperDTO.toDTOList(eventRepositoryPort
+                .findByLocationAndStartDateTimeAndCategory(location, startDateTime, category));
+    }
+
+    
 
     
 }

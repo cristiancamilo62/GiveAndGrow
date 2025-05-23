@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,  "/api/v1/events").permitAll()
 
                         //register and dummy org
-                        .requestMatchers(HttpMethod.POST, "/api/v1/organizations/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/organizations").permitAll()
                         .requestMatchers(HttpMethod.GET,  "/api/v1/organizations/dummy").permitAll()
                         
                         // login(user and org) y register of user

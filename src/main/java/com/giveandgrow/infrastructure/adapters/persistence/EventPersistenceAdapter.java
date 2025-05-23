@@ -1,5 +1,6 @@
 package com.giveandgrow.infrastructure.adapters.persistence;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,7 +15,6 @@ import com.giveandgrow.infrastructure.entities.UserEntity;
 import com.giveandgrow.infrastructure.repositories.EventJpaRepository;
 import com.giveandgrow.infrastructure.repositories.OrganizationJpaRepository;
 import com.giveandgrow.infrastructure.repositories.UserJpaRepository;
-import com.giveandgrow.shared.helper.ObjectHelper;
 import com.giveandgrow.shared.helper.UuidHelper;
 import com.giveandgrow.shared.messages.MessageCatalog;
 import com.giveandgrow.shared.messages.enums.MessageCode;
@@ -131,8 +131,13 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
     }
 
     @Override
+    public List<EventDomain> findByCategory(String category) {
+
+        return eventMapperEntity.toDomainList(eventJpaRepository.findAllByCategory(category));
+    }
+
+    @Override
     public List<EventDomain> findAllEventsByUser(UUID userId) {
-        System.out.println("User ID: " + userId);
         UserEntity userEntity = userJpaRepository.findById(userId)
                 .orElseThrow(() -> new IdDoesNotExistInDatabase(
                         "User " + MessageCatalog.getContentMessage(MessageCode.M0000016),
@@ -140,6 +145,15 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
                 ));
         return eventJpaRepository.findAllByUsers_Id(userEntity.getId()).stream()
                 .map(eventMapperEntity::toDomain).toList();
+    }
+
+    @Override
+    public List<EventDomain> findByLocationAndStartDateTimeAndCategory(String location, LocalDateTime startDateTime,
+           String category) {
+
+
+        return eventJpaRepository.findAllByLocationAndStartDateTimeAndCategory(location, startDateTime, category)
+                .stream().map(eventMapperEntity::toDomain).toList();
     }
 
     

@@ -50,7 +50,7 @@ public class UserDomain {
         setConfirmedPhoneNumber(false);
         setPassword(TextHelper.EMPTY);
         setAccountStatement(false);
-        this.role = Role.ROLE_USER;
+        this.role = Role.USER;
 	}
 
 	public UserDomain(UUID id, String identification, String firstName, String middleName, String lastName,
@@ -69,7 +69,7 @@ public class UserDomain {
 		setConfirmedPhoneNumber(confirmedPhoneNumber);
 		setPassword(password);
 		setAccountStatement(accountStatement);
-		this.role = Role.ROLE_USER;
+		this.role = Role.USER;
 	}
 
 	public final void setId(UUID id) {

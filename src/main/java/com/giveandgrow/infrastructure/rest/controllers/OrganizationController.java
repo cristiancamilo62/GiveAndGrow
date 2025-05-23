@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/organizations")
-public class OrganizateController {
+public class OrganizationController {
 
     private final OrganizationServicePort organizationService;
 

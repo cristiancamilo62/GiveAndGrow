@@ -26,10 +26,10 @@ public class UserController {
     @PostMapping("/r")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
-            userService.createPatient(userDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Your account has been created successfully");
+            userService.createUser(userDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
         } catch (GiveAndGrowException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
         }
     }
 
@@ -38,7 +38,7 @@ public class UserController {
 
         try {
 
-            userService.updatePatient(userDTO);
+            userService.updateUser(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body("Your account has been updated successfully");
 
         } catch (GiveAndGrowException exception) {
@@ -50,7 +50,7 @@ public class UserController {
     public ResponseEntity<String> delete(@PathVariable UUID idUser) {
 
         try {
-            userService.deletePatient(idUser);
+            userService.deleteUser(idUser);
             return ResponseEntity.status(HttpStatus.OK).body("Your account has been deleted successfully");
 
         } catch (GiveAndGrowException exception) {
@@ -62,7 +62,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable UUID idUser) {
 
         try {
-            Optional<UserDTO> user = userService.getPatientById(idUser);
+            Optional<UserDTO> user = userService.getUserById(idUser);
 
             return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(null));
@@ -78,7 +78,7 @@ public class UserController {
 
         try{
 
-            List<UserDTO> users = userService.getAllPatients();
+            List<UserDTO> users = userService.getAllUsers();
 
             return ResponseEntity.status(HttpStatus.OK).body(users);
 

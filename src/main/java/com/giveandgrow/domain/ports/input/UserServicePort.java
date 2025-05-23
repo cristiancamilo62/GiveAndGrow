@@ -8,15 +8,15 @@ import com.giveandgrow.application.dto.UserDTO;
 
 public interface UserServicePort {
 
-    void createPatient(UserDTO patient);
+    void createUser(UserDTO patient);
 
-    Optional<UserDTO> getPatientById(UUID id);
+    Optional<UserDTO> getUserById(UUID id);
 
-    List<UserDTO> getAllPatients();
+    List<UserDTO> getAllUsers();
 
-    UserDTO  updatePatient(UserDTO patient);
+    UserDTO  updateUser(UserDTO patient);
 
-    void deletePatient(UUID id);
+    void deleteUser(UUID id);
 
 
 }

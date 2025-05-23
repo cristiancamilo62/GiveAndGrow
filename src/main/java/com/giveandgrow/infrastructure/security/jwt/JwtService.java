@@ -11,6 +11,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Component
@@ -29,26 +30,25 @@ public class JwtService {
     /**
      * Genera un token JWT con el rol incluido en las reclamaciones.
      */
-    public String generateToken(UserDetails userDetails, String role) {
+    public String generateToken(UserDetails userDetails, String role, UUID id) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
+        claims.put("id", id);
         return createToken(claims, userDetails.getUsername());
     }
 
-    /**
-     * Crea un JWT con las reclamaciones y el sujeto,
-     * firmándolo con HS256 y tu clave secreta.
-     */
+    // Y el método createToken se queda así:
     private String createToken(Map<String, Object> claims, String subject) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + 1000L * 60 * 60 * 10)) // 10 horas
+                .setExpiration(new Date(now + 1000L * 60 * 60 * 10))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     /** Extrae el nombre de usuario (subject) del token */
     public String extractUsername(String token) {

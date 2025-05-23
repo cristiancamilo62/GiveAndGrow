@@ -1,5 +1,6 @@
 package com.giveandgrow.domain.ports.output;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +21,10 @@ public interface EventRepositoryPort {
     List<EventDomain> findByOrganizationId(UUID organizationId);
 
     List<EventDomain> findAllEventsByUser(UUID userId);
+
+    List<EventDomain> findByCategory(String category);
+
+    List<EventDomain> findByLocationAndStartDateTimeAndCategory(String location, LocalDateTime startDateTime, String category);
 
     boolean existsById(UUID id);
 

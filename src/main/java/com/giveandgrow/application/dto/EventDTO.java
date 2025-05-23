@@ -8,6 +8,7 @@ import com.giveandgrow.shared.helper.UuidHelper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.catalina.User;
 
 @Data
 @AllArgsConstructor
@@ -22,6 +23,8 @@ public class EventDTO {
     private LocalDate registrationDeadline;
 
     private String location;
+
+    private String category;
 
     private Integer maxParticipants;
 
@@ -38,6 +41,7 @@ public class EventDTO {
         setStartDateTime(LocalDate.now());
         setRegistrationDeadline(LocalDate.now());
         setLocation(TextHelper.EMPTY);
+        setCategory(TextHelper.EMPTY);
         setMaxParticipants(LongHelper.DEFAULT_LONG.intValue());
         setCurrentParticipantsCount(LongHelper.DEFAULT_LONG.intValue());
         setOrganizationId(UuidHelper.DEFAULT_UUID);

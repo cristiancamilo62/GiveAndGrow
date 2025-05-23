@@ -1,15 +1,17 @@
+
 package com.giveandgrow.infrastructure.security.service;
 
 import com.giveandgrow.domain.ports.output.OrganizationRepositoryPort;
 import com.giveandgrow.domain.ports.output.UserRepositoryPort;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
@@ -21,25 +23,44 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-      
-      // 1) Intentamos cargar un usuario normal
-      return patientRepository.findByEmail(username)
-        .map(u -> new org.springframework.security.core.userdetails.User(
-             u.getEmail(),
-             u.getPassword(),
-             List.of(new SimpleGrantedAuthority("ROLE_USER"))
-          ))
-        // 2) Si no existe, intentamos cargar una organización
-        .orElseGet(() -> organizationRepositoryPort.findByEmail(username)
-          .map(o -> new org.springframework.security.core.userdetails.User(
-               o.getEmail(),
-               o.getPassword(),
-               List.of(new SimpleGrantedAuthority("ROLE_ORG"))
-            ))
-          .orElseThrow(() -> 
-             new UsernameNotFoundException("No user or organization with email: " + username)
-          )
-        );
+        return patientRepository.findByEmail(username)
+                .map(user -> new CustomUserDetails(
+                        user.getEmail(),
+                        user.getPassword(),
+                        true, true, true, true,
+                        List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole())),
+                        user.getId(),
+                        user.getRole(),
+                        Map.of("identification",user.getIdentification(),
+                                "firstName", user.getFirstName(),
+                                "middleName", user.getMiddleName(),
+                                "lastName", user.getLastName(),
+                                "middleLastName", user.getMiddleLastName(),
+                                "email", user.getEmail(),
+                                "phoneNumber", user.getPhoneNumber(),
+                                "password", user.getPassword()
+                        )
+                                
+                ))
+                .orElseGet(() -> organizationRepositoryPort.findByEmail(username)
+                        .map(org -> new CustomUserDetails(
+                                org.getEmail(),
+                                org.getPassword(),
+                                true, true, true, true,
+                                List.of(new SimpleGrantedAuthority("ROLE_" + org.getRole())),
+                                org.getId(),
+                                org.getRole(),
+                                Map.of("identification",org.getName(),
+                                        "description", org.getDescription(),
+                                        "contactNumber", org.getContactNumber(),
+                                        "email", org.getEmail(),
+                                        "password", org.getPassword(),  
+                                        "address", org.getAddress()
+                                        )
+                                
+                        ))
+                        .orElseThrow(() ->
+                                new UsernameNotFoundException("No user or organization with email: " + username)
+                        ));
     }
 }

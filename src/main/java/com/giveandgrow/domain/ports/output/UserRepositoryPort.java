@@ -7,15 +7,15 @@ import java.util.UUID;
 
 public interface UserRepositoryPort {
 
-    void save(UserDomain patient);
+    void save(UserDomain user);
 
-    UserDomain update(UserDomain patient);
+    UserDomain update(UserDomain user);
 
     Optional<UserDomain> findById(UUID id);
 
     List<UserDomain> findAll();
 
-    List<UserDomain> findAllExample(UserDomain patient);
+    List<UserDomain> findAllExample(UserDomain user);
 
     void deleteById(UUID id);
 

@@ -33,7 +33,7 @@ public class UserService implements UserServicePort {
 
 
     @Override
-    public void createPatient(UserDTO userDTO) {
+    public void createUser(UserDTO userDTO) {
 
         UserDomain userDomain = userMapperDTO.toDomain(userDTO);
 
@@ -47,7 +47,7 @@ public class UserService implements UserServicePort {
     }
 
     @Override
-    public Optional<UserDTO> getPatientById(UUID id) {
+    public Optional<UserDTO> getUserById(UUID id) {
 
         genericValidationDataStructure.validateDataNotNullOrEmpty(id,"Id User");
 
@@ -55,26 +55,26 @@ public class UserService implements UserServicePort {
     }
 
     @Override
-    public List<UserDTO> getAllPatients() {
+    public List<UserDTO> getAllUsers() {
 
         return userMapperDTO.toDTOList(userRepositoryPort.findAll());
     }
 
     @Override
-    public UserDTO updatePatient(UserDTO userDTO) {
+    public UserDTO updateUser(UserDTO userDTO) {
 
         UserDomain userDomain = userMapperDTO.toDomain(userDTO);
 
         genericValidationDataStructure.validateDataNotNullOrEmpty(userDomain.getId(),"Id User");
 
-        validationsRuleExecutor.validate(userDomain);
+        // TODO : se debe validar solo los tipos de datos no las de negocio validationsRuleExecutor.validate(userDomain);
 
         return userMapperDTO.toDTO(userRepositoryPort.update(userDomain));
 
     }
 
     @Override
-    public void deletePatient(UUID id) {
+    public void deleteUser(UUID id) {
 
         genericValidationDataStructure.validateDataNotNullOrEmpty(id,"Id User");
 

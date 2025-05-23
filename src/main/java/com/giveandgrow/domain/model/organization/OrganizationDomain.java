@@ -41,7 +41,7 @@ public class OrganizationDomain {
         setEmail(TextHelper.EMPTY);
         setPassword(TextHelper.EMPTY);
         setAddress(TextHelper.EMPTY);
-        this.role = Role.ROLE_ORG;
+        this.role = Role.ORG;
     }
 
 
@@ -54,7 +54,7 @@ public class OrganizationDomain {
         setEmail(email);
         setPassword(password);
         setAddress(address);
-        this.role = Role.ROLE_ORG;
+        this.role = Role.ORG;
     }
 
     public final void setId(UUID id) {

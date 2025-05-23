@@ -1,5 +1,7 @@
 package com.giveandgrow.infrastructure.adapters.persistence.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -15,5 +17,9 @@ public interface EventMapperEntity {
 
     @Mapping(target = "organizationId", ignore = true)
     EventDomain toDomain(EventEntity eventEntity);
+
+    List<EventDomain> toDomainList(List<EventEntity> eventEntities);
+
+    List<EventEntity> toEntityList(List<EventDomain> eventDomains);
 
 }

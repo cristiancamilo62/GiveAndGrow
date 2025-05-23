@@ -1,5 +1,6 @@
 package com.giveandgrow.domain.ports.input;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,10 @@ public interface EventServicePort {
     List<EventDTO> getAllEvents();
 
     List<EventDTO> getEventsByOrganizationId(UUID organizationId);
+
+    List<EventDTO> getEventsByCategory(String category);
+
+    List<EventDTO> getEventsByLocationAndStartDateTimeAndCategory(String location, LocalDateTime startDateTime, String category);
 
     List<EventDTO> getAllEventsByUser(UUID userId);
 

@@ -6,10 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.giveandgrow.infrastructure.security.jwt.JwtService;
+import com.giveandgrow.infrastructure.security.service.CustomUserDetails;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,22 +26,29 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String , Object>> login(@RequestBody Map<String, String> request) {
         
         Authentication  authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.get("email"), request.get("password"))
         );
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         String role = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
-        String token = jwtService.generateToken(userDetails, role);
+        String token = jwtService.generateToken(userDetails, role,userDetails.getId());
+        
 
-        return ResponseEntity.ok(token);
+
+        Map<String, Object> response = Map.of(
+            "token", token,
+            "AuthenticatedUser", userDetails.getResponseAuth()
+        );
+
+        return ResponseEntity.ok(response);
     }
     
 }
