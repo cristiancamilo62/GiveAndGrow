@@ -58,7 +58,14 @@ public class EventController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-    
-    
-    
+
+    @GetMapping
+    public ResponseEntity<List<EventDTO>> getAllEvents() {
+        try {
+            List<EventDTO> list = eventService.getAllEvents();
+            return ResponseEntity.ok(list);
+        } catch (GiveAndGrowException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 }

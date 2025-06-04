@@ -24,6 +24,10 @@ public class UserDTO {
     
     private String email;
 
+    private String institution;
+
+    private String phoneOfNumber;
+
     private String phoneNumber;
 
     private String password;
@@ -37,6 +41,8 @@ public class UserDTO {
         setLastName(TextHelper.EMPTY);
         setMiddleLastName(TextHelper.EMPTY);
         setEmail(TextHelper.EMPTY);
+        setInstitution(TextHelper.EMPTY);
+        setPhoneOfNumber(TextHelper.EMPTY);
         setPhoneNumber(TextHelper.EMPTY);
         setPassword(TextHelper.EMPTY);
     }

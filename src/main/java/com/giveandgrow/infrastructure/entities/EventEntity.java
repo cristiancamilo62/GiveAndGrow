@@ -48,6 +48,9 @@ public class EventEntity {
     @Column(name= "max_participants")
     private Integer maxParticipants;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name= "current_participants_count")
     private Integer currentParticipantsCount;
 

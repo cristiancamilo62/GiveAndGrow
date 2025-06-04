@@ -24,6 +24,10 @@ public class UserDomain {
 
 	private String email;
 
+	private String institution;
+
+	private String phoneOfReference;
+
 	private boolean confirmedEmail;
 
 	private String phoneNumber;
@@ -45,6 +49,8 @@ public class UserDomain {
         setLastName(TextHelper.EMPTY);
         setMiddleLastName(TextHelper.EMPTY);
         setEmail(TextHelper.EMPTY);
+		setInstitution(TextHelper.EMPTY);
+		setPhoneOfReference(TextHelper.EMPTY);
         setConfirmedEmail(false);
         setPhoneNumber(TextHelper.EMPTY);
         setConfirmedPhoneNumber(false);
@@ -54,7 +60,7 @@ public class UserDomain {
 	}
 
 	public UserDomain(UUID id, String identification, String firstName, String middleName, String lastName,
-					  String middleLastName, String email, boolean confirmedEmail, String phoneNumber,
+					  String middleLastName, String email,String institution, String phoneOfReference, boolean confirmedEmail, String phoneNumber,
 					  boolean confirmedPhoneNumber, String password,
 					  boolean accountStatement) {
 		setId(id);
@@ -64,6 +70,8 @@ public class UserDomain {
 		setLastName(lastName);
 		setMiddleLastName(middleLastName);
 		setEmail(email);
+		setInstitution(institution);
+		setPhoneOfReference(phoneOfReference);
 		setConfirmedEmail(confirmedEmail);
 		setPhoneNumber(phoneNumber);
 		setConfirmedPhoneNumber(confirmedPhoneNumber);
@@ -98,6 +106,14 @@ public class UserDomain {
 
 	public final void setEmail(String email) {
 		this.email = ObjectHelper.getDefault(TextHelper.applyTrim(email), TextHelper.EMPTY);
+	}
+
+	public final void setInstitution(String institution){
+		this.institution = ObjectHelper.getDefault(TextHelper.applyTrim(institution), TextHelper.EMPTY);
+	}
+
+	public final void setPhoneOfReference(String phoneOfReference){
+		this.phoneOfReference = ObjectHelper.getDefault(TextHelper.applyTrim(phoneOfReference), TextHelper.EMPTY);
 	}
 
 	public final void setConfirmedEmail(boolean confirmedEmail) {

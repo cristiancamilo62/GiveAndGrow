@@ -5,10 +5,8 @@ import java.util.UUID;
 import com.giveandgrow.shared.helper.LongHelper;
 import com.giveandgrow.shared.helper.TextHelper;
 import com.giveandgrow.shared.helper.UuidHelper;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.catalina.User;
 
 @Data
 @AllArgsConstructor
@@ -30,6 +28,8 @@ public class EventDTO {
 
     private Integer currentParticipantsCount;
 
+    private String description;
+
     private UUID organizationId;
 
     private UUID userToRegister;
@@ -44,6 +44,8 @@ public class EventDTO {
         setCategory(TextHelper.EMPTY);
         setMaxParticipants(LongHelper.DEFAULT_LONG.intValue());
         setCurrentParticipantsCount(LongHelper.DEFAULT_LONG.intValue());
+        setCategory(TextHelper.EMPTY);
+        setDescription(TextHelper.EMPTY);
         setOrganizationId(UuidHelper.DEFAULT_UUID);
         setUserToRegister(UuidHelper.DEFAULT_UUID);
 

@@ -28,6 +28,8 @@ public class EventDomain {
 
     private Integer maxParticipants;
 
+    private String description;
+
     private Integer currentParticipantsCount;
 
     private UUID organizationId ;
@@ -43,12 +45,14 @@ public class EventDomain {
         setLocation(TextHelper.EMPTY);
         setCategory(TextHelper.EMPTY);
         setMaxParticipants(LongHelper.DEFAULT_LONG.intValue());
+        setCategory(TextHelper.EMPTY);
+        setDescription(TextHelper.EMPTY);
         setCurrentParticipantsCount(LongHelper.DEFAULT_LONG.intValue());
         setOrganizationId(UuidHelper.DEFAULT_UUID);
 
     }
 
-    public EventDomain(UUID id, String name, LocalDateTime startDateTime, LocalDateTime registerDeadline, String location, String category, UUID organizationId) {
+    public EventDomain(UUID id, String name, LocalDateTime startDateTime, LocalDateTime registerDeadline, String location, String category, String description, UUID organizationId) {
         setId(id);
         setName(name);
         setStartDateTime(startDateTime);
@@ -56,6 +60,7 @@ public class EventDomain {
         setLocation(location);
         setCategory(category);
         setMaxParticipants(LongHelper.DEFAULT_LONG.intValue());
+        setDescription(description);
         setCurrentParticipantsCount(LongHelper.DEFAULT_LONG.intValue());
         setOrganizationId(organizationId);
         
@@ -83,6 +88,10 @@ public class EventDomain {
 
     public final void setCategory(String category){
         this.category = ObjectHelper.getDefault(TextHelper.applyTrim(category), TextHelper.EMPTY);
+    }
+
+    public final void setDescription(String description){
+        this.description = ObjectHelper.getDefault(TextHelper.applyTrim(description), TextHelper.EMPTY);
     }
 
     public final void setOrganizationId(UUID organizationId){

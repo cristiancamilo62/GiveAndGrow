@@ -37,8 +37,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                                 "lastName", user.getLastName(),
                                 "middleLastName", user.getMiddleLastName(),
                                 "email", user.getEmail(),
-                                "phoneNumber", user.getPhoneNumber(),
-                                "password", user.getPassword()
+                                "phoneNumber", user.getPhoneNumber()
+
                         )
                                 
                 ))
@@ -50,11 +50,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                                 List.of(new SimpleGrantedAuthority("ROLE_" + org.getRole())),
                                 org.getId(),
                                 org.getRole(),
-                                Map.of("identification",org.getName(),
+                                Map.of("name",org.getName(),
                                         "description", org.getDescription(),
                                         "contactNumber", org.getContactNumber(),
                                         "email", org.getEmail(),
-                                        "password", org.getPassword(),  
                                         "address", org.getAddress()
                                         )
                                 
