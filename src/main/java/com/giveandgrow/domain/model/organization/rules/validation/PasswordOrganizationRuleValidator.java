@@ -19,7 +19,7 @@ public class PasswordOrganizationRuleValidator implements GenericValidationRule<
 
         genericValidationDataStructure.validateDataNotNullOrEmpty(password, FIELD_NAME_PASSWORD);
 
-        genericValidationDataStructure.validateLengthDataRange(password, 8, 20, FIELD_NAME_PASSWORD);
+        genericValidationDataStructure.validateLengthDataRange(password, 8, 60, FIELD_NAME_PASSWORD);
 
         genericValidationDataStructure.validateFormatPassword(password, FIELD_NAME_PASSWORD);
 

@@ -37,7 +37,6 @@ public class UserController {
     public ResponseEntity<String> update(@RequestBody UserDTO userDTO) {
 
         try {
-
             userService.updateUser(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body("Your account has been updated successfully");
 

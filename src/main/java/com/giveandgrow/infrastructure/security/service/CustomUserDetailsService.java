@@ -37,7 +37,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                                 "lastName", user.getLastName(),
                                 "middleLastName", user.getMiddleLastName(),
                                 "email", user.getEmail(),
-                                "phoneNumber", user.getPhoneNumber()
+                                "phoneNumber", user.getPhoneNumber(),
+                                "phoneOfReference", user.getPhoneOfReference(),
+                                "institution", user.getInstitution(),
+                                "password", user.getPassword()
 
                         )
                                 
@@ -51,10 +54,12 @@ public class CustomUserDetailsService implements UserDetailsService {
                                 org.getId(),
                                 org.getRole(),
                                 Map.of("name",org.getName(),
+                                            "nit", org.getNit(),
                                         "description", org.getDescription(),
                                         "contactNumber", org.getContactNumber(),
                                         "email", org.getEmail(),
-                                        "address", org.getAddress()
+                                        "address", org.getAddress(),
+                                        "password", org.getPassword()
                                         )
                                 
                         ))

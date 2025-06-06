@@ -1,6 +1,6 @@
 package com.giveandgrow.infrastructure.rest.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.giveandgrow.application.dto.EventDTO;
 import com.giveandgrow.domain.ports.input.EventServicePort;
 import com.giveandgrow.shared.exception.GiveAndGrowException;
@@ -8,12 +8,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,9 +33,10 @@ public class EventController {
         
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<String> update(@RequestBody EventDTO eventDTO) {
         try {
+            System.out.println(eventDTO.toString());
             eventService.updateEvent(eventDTO);
             return ResponseEntity.ok("Event updated successfully");
         } catch (GiveAndGrowException e) {
@@ -52,7 +47,7 @@ public class EventController {
     @GetMapping("/{id}")
     public ResponseEntity<List<EventDTO>> getEventsByOrganizationId(@PathVariable UUID id) {
         try {
-            List<EventDTO> list = eventService.getAllEventsByUser(id);
+            List<EventDTO> list = eventService.getEventsByOrganizationId(id);
             return ResponseEntity.ok(list);
         } catch (GiveAndGrowException e) {
             return ResponseEntity.badRequest().body(null);
@@ -66,6 +61,17 @@ public class EventController {
             return ResponseEntity.ok(list);
         } catch (GiveAndGrowException e) {
             return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEventsById(@PathVariable UUID id) {
+        try {
+            eventService.deleteEvent(id);
+            return ResponseEntity.ok("Event deleted successfully");
+
+        } catch (GiveAndGrowException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

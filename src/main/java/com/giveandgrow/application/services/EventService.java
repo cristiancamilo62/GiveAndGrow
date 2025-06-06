@@ -27,10 +27,14 @@ public class EventService implements EventServicePort {
     
     @Override
     public void createEvent(EventDTO event) {
+
+        System.out.println(event.getAddress());
         
         genericValidationDataStructure.validateDataNotNullOrEmpty(event, "Event");
 
         EventDomain eventDomain = eventMapperDTO.toDomain(event);
+
+        System.out.println(eventDomain.getAddress());
         
         eventDomain.setId(UUID.randomUUID());
 
@@ -91,9 +95,9 @@ public class EventService implements EventServicePort {
 
     @Override
     public List<EventDTO> getEventsByLocationAndStartDateTimeAndCategory(String location, LocalDateTime startDateTime,
-            String category) {
-        
-            return eventMapperDTO.toDTOList(eventRepositoryPort
+                                                                         String category) {
+
+        return eventMapperDTO.toDTOList(eventRepositoryPort
                 .findByLocationAndStartDateTimeAndCategory(location, startDateTime, category));
     }
 

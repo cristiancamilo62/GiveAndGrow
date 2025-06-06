@@ -22,9 +22,9 @@ public interface OrganizationRepositoryPort {
 
     boolean existsById(UUID id);
 
-    boolean existsByEmail(String email);
+    boolean existsByContactNumber(String contactNumber,UUID id);
 
-    boolean existsByContactNumber(String contactNumber);
+    boolean existsByEmail(String email, UUID id);
 
     boolean existsByEmailAndPassword(String user, String password);
 

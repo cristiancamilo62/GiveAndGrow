@@ -26,7 +26,7 @@ public class UserDTO {
 
     private String institution;
 
-    private String phoneOfNumber;
+    private String phoneOfReference;
 
     private String phoneNumber;
 
@@ -42,7 +42,7 @@ public class UserDTO {
         setMiddleLastName(TextHelper.EMPTY);
         setEmail(TextHelper.EMPTY);
         setInstitution(TextHelper.EMPTY);
-        setPhoneOfNumber(TextHelper.EMPTY);
+        setPhoneOfReference(TextHelper.EMPTY);
         setPhoneNumber(TextHelper.EMPTY);
         setPassword(TextHelper.EMPTY);
     }

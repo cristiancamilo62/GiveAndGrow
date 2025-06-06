@@ -20,6 +20,8 @@ public class EventDTO {
 
     private LocalDate registrationDeadline;
 
+    private String address;
+
     private String location;
 
     private String category;
@@ -46,6 +48,7 @@ public class EventDTO {
         setCurrentParticipantsCount(LongHelper.DEFAULT_LONG.intValue());
         setCategory(TextHelper.EMPTY);
         setDescription(TextHelper.EMPTY);
+        setAddress(TextHelper.EMPTY);
         setOrganizationId(UuidHelper.DEFAULT_UUID);
         setUserToRegister(UuidHelper.DEFAULT_UUID);
 

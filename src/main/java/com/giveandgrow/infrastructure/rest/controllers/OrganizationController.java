@@ -1,16 +1,12 @@
 package com.giveandgrow.infrastructure.rest.controllers;
 
 import com.giveandgrow.domain.ports.input.OrganizationServicePort;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.giveandgrow.application.dto.OrganizationDTO;
 import com.giveandgrow.shared.exception.GiveAndGrowException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,7 +30,18 @@ public class OrganizationController {
         } catch (GiveAndGrowException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        
+
     }
+
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody OrganizationDTO organizationDTO) {
+        try {
+            OrganizationDTO updatedOrganization = organizationService.updateOrganization(organizationDTO);
+            return ResponseEntity.ok(updatedOrganization);
+        } catch (GiveAndGrowException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 
 }

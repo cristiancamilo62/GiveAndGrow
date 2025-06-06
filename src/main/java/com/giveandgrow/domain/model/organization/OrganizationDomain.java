@@ -16,6 +16,8 @@ public class OrganizationDomain {
 
     private UUID id;
 
+    private String nit;
+
     private String name;
 
     private String description;
@@ -35,6 +37,7 @@ public class OrganizationDomain {
 
     public OrganizationDomain(){
         setId(UuidHelper.DEFAULT_UUID);
+        setNit(TextHelper.EMPTY);
         setName(TextHelper.EMPTY);
         setDescription(TextHelper.EMPTY);
         setContactNumber(TextHelper.EMPTY);
@@ -45,9 +48,10 @@ public class OrganizationDomain {
     }
 
 
-    public OrganizationDomain(UUID id, String name, String description, String contactNumber,
+    public OrganizationDomain(UUID id,String nit, String name, String description, String contactNumber,
             String email, String password, String address) {
         setId(id);
+        setName(nit);
         setName(name);
         setDescription(description);
         setContactNumber(contactNumber);
@@ -59,6 +63,10 @@ public class OrganizationDomain {
 
     public final void setId(UUID id) {
         this.id = id;
+    }
+
+    public final void setNit(String nit) {
+        this.nit = ObjectHelper.getDefault(TextHelper.applyTrim(nit), TextHelper.EMPTY);
     }
 
     public final void setName(String name){

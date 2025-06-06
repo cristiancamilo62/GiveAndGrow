@@ -56,40 +56,48 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
     }
 
     @Override
-    @Transactional
     public EventDomain update(EventDomain event, UUID userId) {
-        // 1) Cargo el EventEntity que ya vive en el Persistence Context
+        // 1) Cargar la entidad existente desde la base de datos
         EventEntity evEntity = eventJpaRepository.findById(event.getId())
-            .orElseThrow(() -> new IdDoesNotExistInDatabase(
-                "Event " + MessageCatalog.getContentMessage(MessageCode.M0000016),
-                MessageCatalog.getContentMessage(MessageCode.M0000003)
-            ));
+                .orElseThrow(() -> new IdDoesNotExistInDatabase(
+                        "Event " + MessageCatalog.getContentMessage(MessageCode.M0000016),
+                        MessageCatalog.getContentMessage(MessageCode.M0000003)
+                ));
 
-        // 2) Si quieres también parchear otros campos, los ajustas aquí:
-        //    evEntity.setName(event.getName());
-        //    evEntity.setStartDateTime(event.getStartDateTime());
-        //    … etc.
+        // 2) Actualizar los campos del evento con los nuevos datos del objeto EventDomain
+        evEntity.setName(event.getName());
+        evEntity.setStartDateTime(event.getStartDateTime());
+        evEntity.setRegistrationDeadline(event.getRegistrationDeadline());
+        evEntity.setDescription(event.getDescription());
+        evEntity.setLocation(event.getLocation());
+        evEntity.setAddress(event.getAddress());
+        evEntity.setMaxParticipants(event.getMaxParticipants());
+        evEntity.setCategory(event.getCategory());
+        // Agrega aquí cualquier otro campo que quieras actualizar
 
-        // 3) Busco el usuario y lo añado a la lista de la entidad gestionada
+        // 3) Validar y agregar usuario si se proporcionó un userId válido
+        boolean isUserIdValid = userId != null
+                && !UuidHelper.isDefaultOrNull(userId)
+                && !UuidHelper.isUuidEmpty(userId);
 
-        if(!UuidHelper.isDefaultOrNull(userId) || !UuidHelper.isUuidEmpty(userId)) {
+        if (isUserIdValid) {
             UserEntity uEntity = userJpaRepository.findById(userId)
-            .orElseThrow(() -> new IdDoesNotExistInDatabase(
-                "User " + MessageCatalog.getContentMessage(MessageCode.M0000016),
-                MessageCatalog.getContentMessage(MessageCode.M0000003)
-            ));
+                    .orElseThrow(() -> new IdDoesNotExistInDatabase(
+                            "User " + MessageCatalog.getContentMessage(MessageCode.M0000016),
+                            MessageCatalog.getContentMessage(MessageCode.M0000003)
+                    ));
+
             evEntity.getUsers().add(uEntity);
             evEntity.setCurrentParticipantsCount(evEntity.getCurrentParticipantsCount() + 1);
-
         }
-        
 
-        // 4) Guardo la MISMA entidad
+        // 4) Guardar la entidad gestionada (evEntity)
         EventEntity saved = eventJpaRepository.save(evEntity);
 
-        // 5) La convierto de vuelta a dominio y la retorno
+        // 5) Convertir a dominio y retornar
         return eventMapperEntity.toDomain(saved);
     }
+
 
 
 

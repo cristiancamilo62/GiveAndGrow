@@ -42,6 +42,9 @@ public class EventEntity {
     @Column(name = "location")  
     private String location;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name= "category")
     private String category;
 

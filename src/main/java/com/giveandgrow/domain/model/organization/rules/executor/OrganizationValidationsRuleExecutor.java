@@ -37,8 +37,8 @@ public class OrganizationValidationsRuleExecutor implements GenericValidationRul
         passwordOrganizationRuleValidator.validate(organizationDomain.getPassword());
         contactNumberOrganizationRuleValidator.validate(organizationDomain.getContactNumber());
         addressOrganizationRuleValidator.validate(organizationDomain.getAddress());
-        organizationEmailAlreadyExistBusinessRule.validate(organizationDomain.getEmail());
-        organizationContactNumberAlreadyExistBusinessRule.validate(organizationDomain.getContactNumber());
+        organizationEmailAlreadyExistBusinessRule.validate(organizationDomain);
+        organizationContactNumberAlreadyExistBusinessRule.validate(organizationDomain);
       
     }
 

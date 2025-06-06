@@ -37,11 +37,11 @@ public class UserEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "institucion")
-    private String institucion;
+    @Column(name = "institution")
+    private String institution;
 
     @Column(name = "phone_of_reference")
-    private int phoneOfReference;
+    private String phoneOfReference;
 
     @Column(name = "confirmed_email")
     private boolean confirmedEmail;

@@ -12,6 +12,8 @@ public class OrganizationDTO {
 
     private UUID id;
 
+    private String nit;
+
     private String name;
 
     private String description;
@@ -27,6 +29,7 @@ public class OrganizationDTO {
 
     public OrganizationDTO() {
         setId(UuidHelper.DEFAULT_UUID);
+        setNit(TextHelper.EMPTY);
         setName(TextHelper.EMPTY);
         setDescription(TextHelper.EMPTY);
         setContactNumber(TextHelper.EMPTY);

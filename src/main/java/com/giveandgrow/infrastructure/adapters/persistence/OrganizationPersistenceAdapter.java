@@ -83,9 +83,9 @@ public class OrganizationPersistenceAdapter implements OrganizationRepositoryPor
     }
 
     @Override
-    public boolean existsByEmail(String email) {
+    public boolean existsByEmail(String email, UUID id) {
         
-        return organizationJpaRepository.existsByEmail(email);
+        return organizationJpaRepository.existsByEmailAndIdNot(email,id);
     }
 
     @Override
@@ -102,8 +102,8 @@ public class OrganizationPersistenceAdapter implements OrganizationRepositoryPor
     }
 
     @Override
-    public boolean existsByContactNumber(String contactNumber) {
+    public boolean existsByContactNumber(String contactNumber,UUID id) {
         
-        return organizationJpaRepository.existsByContactNumber(contactNumber);
+        return organizationJpaRepository.existsByContactNumberAndIdNot(contactNumber,id);
     }
 }

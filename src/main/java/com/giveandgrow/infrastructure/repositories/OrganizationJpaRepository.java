@@ -10,11 +10,11 @@ import com.giveandgrow.infrastructure.entities.OrganizationEntity;
 @Repository
 public interface OrganizationJpaRepository extends JpaRepository<OrganizationEntity, UUID> {
 
-    boolean existsByEmail(String email);
+    boolean existsByEmailAndIdNot(String email,UUID id );
 
     boolean existsByEmailAndPassword(String user, String password);
 
-    boolean existsByContactNumber(String contactNumber);
+    boolean existsByContactNumberAndIdNot(String contactNumber, UUID id);
 
     Optional<OrganizationEntity> findByEmail(String email);
 

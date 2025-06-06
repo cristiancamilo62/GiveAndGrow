@@ -12,10 +12,12 @@ import com.giveandgrow.infrastructure.entities.EventEntity;
 public interface EventMapperEntity {
 
     @Mapping(target = "organization", ignore = true)
+    @Mapping(source = "address", target = "address")
     EventEntity toEntity(EventDomain event);
 
 
     @Mapping(target = "organizationId", ignore = true)
+    @Mapping(source = "address", target = "address")
     EventDomain toDomain(EventEntity eventEntity);
 
     List<EventDomain> toDomainList(List<EventEntity> eventEntities);

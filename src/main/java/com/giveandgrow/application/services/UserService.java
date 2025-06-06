@@ -37,6 +37,9 @@ public class UserService implements UserServicePort {
 
         UserDomain userDomain = userMapperDTO.toDomain(userDTO);
 
+        System.out.println(userDomain.getInstitution());
+        System.out.println(userDomain.getPhoneOfReference());
+
         userDomain.setId(UUID.randomUUID());
 
         validationsRuleExecutor.validate(userDomain);
@@ -63,11 +66,18 @@ public class UserService implements UserServicePort {
     @Override
     public UserDTO updateUser(UserDTO userDTO) {
 
+        System.out.println(userDTO.getInstitution());
+        System.out.println(userDTO.getPhoneOfReference());
+
         UserDomain userDomain = userMapperDTO.toDomain(userDTO);
+
+        System.out.println(userDomain.getInstitution());
+        System.out.println(userDomain.getPhoneOfReference());
+
 
         genericValidationDataStructure.validateDataNotNullOrEmpty(userDomain.getId(),"Id User");
 
-        // TODO : se debe validar solo los tipos de datos no las de negocio validationsRuleExecutor.validate(userDomain);
+
 
         return userMapperDTO.toDTO(userRepositoryPort.update(userDomain));
 
