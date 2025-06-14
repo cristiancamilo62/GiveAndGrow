@@ -21,7 +21,7 @@ public class DescriptionOrganizationRuleValidator implements GenericValidationRu
 
         genericValidationDataStructure.validateLengthDataRange(description, 10, 200, FIELD_NAME_DESCRIPTION);
 
-        genericValidationDataStructure.validateFormatDataOnlyLettersAndDigitsAtSpace(description, FIELD_NAME_DESCRIPTION);
+        genericValidationDataStructure.validateFormatText(description, FIELD_NAME_DESCRIPTION);
        
         }
 }

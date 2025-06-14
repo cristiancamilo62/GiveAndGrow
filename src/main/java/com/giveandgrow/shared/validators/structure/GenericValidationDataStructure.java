@@ -55,6 +55,13 @@ public final class GenericValidationDataStructure {
         }
     }
 
+    public void validateFormatText(String value, String dataName) {
+        if(!TextHelper.isValidText(value)){
+            String userMessage = dataName + MessageCatalog.getContentMessage(MessageCode.M0000022);
+            throw new InvalidFormatDataRuleValidatorException(userMessage);
+        }
+    }
+
     public void validateFormatDataOnlyLettersAndDigitsAtDomain(String value, String dataName) {
         if(!TextHelper.containsOnlyLettersDigitsAtDomain(value)){
             String userMessage = dataName + MessageCatalog.getContentMessage(MessageCode.M0000008);
@@ -65,6 +72,13 @@ public final class GenericValidationDataStructure {
     public void validateFormatPassword(String value, String dataName) {
         if(!TextHelper.isValidPassword(value)){
             String userMessage = dataName + MessageCatalog.getContentMessage(MessageCode.M0000009);
+            throw new InvalidFormatDataRuleValidatorException(userMessage);
+        }
+    }
+
+    public void validateFormatAddress(String value, String dataName) {
+        if(!TextHelper.isValidAddress(value)){
+            String userMessage = dataName + MessageCatalog.getContentMessage(MessageCode.M0000021);
             throw new InvalidFormatDataRuleValidatorException(userMessage);
         }
     }

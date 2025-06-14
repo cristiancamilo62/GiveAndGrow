@@ -10,8 +10,11 @@ public final class TextHelper {
     private static final String PATTERN_ONLY_LETTERS = "^[A-Za-záéíóúÁÉÍÓÚ]+$";
     private static final String PATTERN_ONLY_LETTERS_DIGITS = "^[0-9A-Za-záéíóúÁÉÍÓÚ]+$";
     private static final String PATTERN_ONLY_LETTERS_DIGITS_SPACES = "^[0-9A-Za-záéíóúÁÉÍÓÚ ]+$";
+    private static final String PATTERN_TEXT = "^[a-zA-ZÀ-ÿ0-9.,()\\-:;¡!¿?&\"'\\s]*$";
     private static final String PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).*$";
     private static final String PATTERN_DATE = "^([0-2][0-9]|3[01])/([0][1-9]|1[0-2])/\\d{4}$";
+    private static final String PATTERN_ADDRESS = "^(?i)(cra|cll|calle|kr|cra\\.?|cra|av|av\\.?|avenida|transversal|" +
+            "tv|tv\\.?|dg|diagonal)\\s?\\d{1,3}[a-zA-Z]?(?:\\s?[a-zA-Z]*)?\\s?(#|no\\.?)\\s?\\d{1,3}[a-zA-Z]?(?:-\\d{1,3}[a-zA-Z]?)?$\n";
 
     private static final String PATTERN_ONLY_LETTERS_DIGITS_AT_DOMAIN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
 
@@ -59,6 +62,14 @@ public final class TextHelper {
     public static boolean isValidDateTime(final String value) {
         return value.matches(PATTERN_DATE);
     }
+
+    public static boolean isValidAddress(final String value) {
+        return applyTrim(value).matches(PATTERN_ADDRESS);
+    }
+
+    public static  boolean isValidText(final String value) {
+        return applyTrim(value).matches(PATTERN_TEXT);
+    }
     
     public static boolean isValidMinimumLength(final String value, final int minimumLength) {
         return applyTrim(value).length() >= minimumLength;
@@ -95,4 +106,6 @@ public final class TextHelper {
     public static boolean containsOnlyLettersDigits(final String value) {
         return applyTrim(value).matches(PATTERN_ONLY_LETTERS_DIGITS);
     }
+
+
 }

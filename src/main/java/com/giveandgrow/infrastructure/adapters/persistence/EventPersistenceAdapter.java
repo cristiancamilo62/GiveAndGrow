@@ -52,6 +52,8 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
 
         // 4) Persiste la organización (cascade ALL propagará el save del evento)
         organizationJpaRepository.save(org);
+
+        
         
     }
 

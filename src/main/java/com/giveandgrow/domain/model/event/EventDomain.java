@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import com.giveandgrow.domain.model.postulation.PostulationDomain;
 import com.giveandgrow.domain.model.user.UserDomain;
 import com.giveandgrow.shared.helper.LongHelper;
 import com.giveandgrow.shared.helper.ObjectHelper;
@@ -37,6 +39,8 @@ public class EventDomain {
     private UUID organizationId ;
 
     private final List<UserDomain> users = new ArrayList<>();
+
+    private final List<PostulationDomain> postulations = new ArrayList<>();
 
 
     public EventDomain(){

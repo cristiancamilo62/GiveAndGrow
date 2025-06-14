@@ -33,12 +33,9 @@ public class UserService implements UserServicePort {
 
 
     @Override
-    public void createUser(UserDTO userDTO) {
+    public UserDTO createUser(UserDTO userDTO) {
 
         UserDomain userDomain = userMapperDTO.toDomain(userDTO);
-
-        System.out.println(userDomain.getInstitution());
-        System.out.println(userDomain.getPhoneOfReference());
 
         userDomain.setId(UUID.randomUUID());
 
@@ -47,6 +44,8 @@ public class UserService implements UserServicePort {
         userDomain.setPassword(passwordEncoder.encode(userDomain.getPassword()));
 
         userRepositoryPort.save(userDomain);
+
+        return userMapperDTO.toDTO(userDomain);
     }
 
     @Override

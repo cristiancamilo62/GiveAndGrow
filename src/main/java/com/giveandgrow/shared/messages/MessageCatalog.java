@@ -87,7 +87,11 @@ public class MessageCatalog {
 		addMessage(Message.create(MessageCode.M0000020, MessageType.USER, MessageCategory.ERROR,
 				"must contain only letters, digits and spaces"));
 
+		addMessage(Message.create(MessageCode.M0000021, MessageType.USER, MessageCategory.ERROR,
+				"must be in the format 'Calle 123 # 45-67' "));
 
+		addMessage(Message.create(MessageCode.M0000022, MessageType.USER, MessageCategory.ERROR,
+				"can only contain letters, numbers, spaces, and basic punctuation (e.g., . , ( ) : ; ¡ ! ¿ ? & \\\" ')."));
 		
 
 	}

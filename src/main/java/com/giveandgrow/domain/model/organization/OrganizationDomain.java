@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import com.giveandgrow.domain.model.event.EventDomain;
+import com.giveandgrow.domain.model.postulation.PostulationDomain;
 import com.giveandgrow.domain.model.security.Role;
 import com.giveandgrow.shared.helper.ObjectHelper;
 import com.giveandgrow.shared.helper.TextHelper;
@@ -33,6 +34,8 @@ public class OrganizationDomain {
     private final Role role;
 
     private final List<EventDomain> events = new ArrayList<>();
+
+    private final List<PostulationDomain> postulations = new ArrayList<>();
 
 
     public OrganizationDomain(){

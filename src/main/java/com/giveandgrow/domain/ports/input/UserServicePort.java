@@ -8,7 +8,7 @@ import com.giveandgrow.application.dto.UserDTO;
 
 public interface UserServicePort {
 
-    void createUser(UserDTO patient);
+    UserDTO createUser(UserDTO patient);
 
     Optional<UserDTO> getUserById(UUID id);
 

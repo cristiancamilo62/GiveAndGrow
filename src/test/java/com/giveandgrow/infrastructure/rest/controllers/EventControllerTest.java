@@ -6,19 +6,16 @@ import com.giveandgrow.domain.ports.input.EventServicePort;
 import com.giveandgrow.initializer.giveandgrowApplication;
 import com.giveandgrow.shared.exception.GiveAndGrowException;
 import com.giveandgrow.shared.exception.enums.LocationException;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -33,7 +30,7 @@ public class EventControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private EventServicePort eventService;
 
     @Autowired

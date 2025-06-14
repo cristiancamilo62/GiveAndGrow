@@ -19,9 +19,9 @@ public class AddressOrganizationRuleValidator implements GenericValidationRule<S
 
         genericValidationDataStructure.validateDataNotNullOrEmpty(address, FIELD_NAME_ADDRESS);
 
-        genericValidationDataStructure.validateLengthDataRange(address, 5, 100, FIELD_NAME_ADDRESS);
+        genericValidationDataStructure.validateLengthDataRange(address, 5, 40, FIELD_NAME_ADDRESS);
 
-        genericValidationDataStructure.validateFormatDataOnlyLettersAndDigitsAtSpace(address, FIELD_NAME_ADDRESS);
+        genericValidationDataStructure.validateFormatAddress(address, FIELD_NAME_ADDRESS);
         
     }
 

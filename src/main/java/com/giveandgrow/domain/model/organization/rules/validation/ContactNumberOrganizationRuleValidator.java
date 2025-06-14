@@ -9,18 +9,18 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ContactNumberOrganizationRuleValidator implements GenericValidationRule<String> {
 
-    public static final String FIEL_NAME_CONTACT_NUMBER = "Contact Number ";
+    public static final String FIELD_NAME_CONTACT_NUMBER = "Contact Number ";
     private final GenericValidationDataStructure genericValidationDataStructure;
     
     
     @Override
     public void validate(String contactNumber) {
         
-        genericValidationDataStructure.validateDataNotNullOrEmpty(contactNumber,FIEL_NAME_CONTACT_NUMBER);
+        genericValidationDataStructure.validateDataNotNullOrEmpty(contactNumber,FIELD_NAME_CONTACT_NUMBER);
 
-        genericValidationDataStructure.validateLengthDataRange(contactNumber,7,10,FIEL_NAME_CONTACT_NUMBER);
+        genericValidationDataStructure.validateLengthDataRange(contactNumber,7,10,FIELD_NAME_CONTACT_NUMBER);
 
-        genericValidationDataStructure.validateFormatDataOnlyDigits(contactNumber, FIEL_NAME_CONTACT_NUMBER);
+        genericValidationDataStructure.validateFormatDataOnlyDigits(contactNumber, FIELD_NAME_CONTACT_NUMBER);
     }
 
    
