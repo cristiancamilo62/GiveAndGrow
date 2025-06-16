@@ -11,9 +11,11 @@ import com.giveandgrow.shared.helper.LongHelper;
 import com.giveandgrow.shared.helper.ObjectHelper;
 import com.giveandgrow.shared.helper.TextHelper;
 import com.giveandgrow.shared.helper.UuidHelper;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
+@Data
 public class EventDomain {
 
     private UUID id;

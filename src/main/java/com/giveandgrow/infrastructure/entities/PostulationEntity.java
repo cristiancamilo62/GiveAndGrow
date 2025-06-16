@@ -1,6 +1,7 @@
 package com.giveandgrow.infrastructure.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Table(name = "postulations")
 @Getter
 @Setter
+@Data
 public class PostulationEntity {
 
     @Id
@@ -21,11 +23,11 @@ public class PostulationEntity {
     private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "event_id",nullable = false)
     private EventEntity event;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status",nullable = false)
     private PostulationStatus status;
 
     @Column(name = "create_at",nullable = false)

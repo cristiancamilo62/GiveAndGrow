@@ -4,6 +4,7 @@ package com.giveandgrow.infrastructure.adapters.persistence;
 import com.giveandgrow.domain.model.postulation.PostulationDomain;
 import com.giveandgrow.domain.ports.output.PostulationRepositoryPort;
 import com.giveandgrow.infrastructure.adapters.persistence.mapper.PostulationMapperEntity;
+import com.giveandgrow.infrastructure.entities.PostulationEntity;
 import com.giveandgrow.infrastructure.repositories.PostulationJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,10 @@ public class PostulationPersistenceAdapter implements PostulationRepositoryPort 
 
     @Override
     public PostulationDomain save(PostulationDomain domain) {
+
+        PostulationEntity p = postulationMapperEntity.toEntity(domain);
+
+        System.out.println("hola"+p.toString());
 
         return postulationMapperEntity.toDomain(postulationJpaRepository
                 .save(postulationMapperEntity.toEntity(domain)));

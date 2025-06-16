@@ -1,19 +1,19 @@
 package com.giveandgrow.domain.ports.input;
 
-import com.giveandgrow.domain.model.postulation.PostulationDomain;
+import com.giveandgrow.application.dto.PostulationDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface PostulationServicePort {
 
-    PostulationDomain postulate(UUID userId, UUID eventId);
+    PostulationDTO postulate(UUID userId, UUID eventId);
 
-    PostulationDomain accept(UUID postulationId);
+    PostulationDTO accept(UUID postulationId);
 
-    PostulationDomain reject(UUID postulationId);
+    PostulationDTO reject(UUID postulationId);
 
-    List<PostulationDomain> getPostulationsByUser(UUID userId);
+    List<PostulationDTO> getPostulationsByUser(UUID userId);
 
-    List<PostulationDomain> getPostulationsByEvent(UUID eventId);
+    List<PostulationDTO> getPostulationsByEvent(UUID eventId);
 }

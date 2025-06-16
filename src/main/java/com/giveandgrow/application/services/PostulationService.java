@@ -1,9 +1,14 @@
 package com.giveandgrow.application.services;
 
+import com.giveandgrow.application.dto.PostulationDTO;
 import com.giveandgrow.application.mapper.PostulationMapperDTO;
+import com.giveandgrow.domain.model.event.EventDomain;
 import com.giveandgrow.domain.model.postulation.PostulationDomain;
+import com.giveandgrow.domain.model.user.UserDomain;
 import com.giveandgrow.domain.ports.input.PostulationServicePort;
+import com.giveandgrow.domain.ports.output.EventRepositoryPort;
 import com.giveandgrow.domain.ports.output.PostulationRepositoryPort;
+import com.giveandgrow.domain.ports.output.UserRepositoryPort;
 import com.giveandgrow.shared.validators.structure.GenericValidationDataStructure;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +27,16 @@ public class PostulationService implements PostulationServicePort {
 
     private final PostulationRepositoryPort postulationRepository;
 
+    private final EventRepositoryPort eventRepository;
+
+    private final UserRepositoryPort userRepository;
+
     private final GenericValidationDataStructure genericValidationDataStructure;
 
 
     @Override
-    public PostulationDomain postulate(UUID userId, UUID eventId) {
+    public PostulationDTO postulate(UUID userId, UUID eventId) {
+
        genericValidationDataStructure.validateDataNotNullOrEmpty(userId, "user Id");
        genericValidationDataStructure.validateDataNotNullOrEmpty(eventId, "event Id");
 
@@ -39,37 +49,70 @@ public class PostulationService implements PostulationServicePort {
                 .userId(userId)
                 .eventId(eventId)
                 .status(PostulationDomain.PostulationStatus.PENDING)
-                .createdAt(String.valueOf(LocalDateTime.now()))
+                .createAt(String.valueOf(LocalDateTime.now()))
                 .build();
+       System.out.println(postulation.toString());
 
-        return postulationRepository.save(postulation);
+        return postulationMapperDTO.toDTO(postulationRepository.save(postulation));
     }
 
     @Override
-    public PostulationDomain accept(UUID postulationId) {
+    public PostulationDTO accept(UUID postulationId) {
         genericValidationDataStructure.validateDataNotNullOrEmpty(postulationId, "postulation Id");
+
+        // 1. Obtener y validar postulación
         PostulationDomain postulationDomain = postulationRepository
-                .findById(postulationId).orElseThrow(()-> new IllegalArgumentException("Postulation does not exist"));
+                .findById(postulationId)
+                .orElseThrow(() -> new IllegalArgumentException("Postulation does not exist"));
+
+
+
+
+        // 2. Cambiar estado a ACEPTADO
         postulationDomain.setStatus(PostulationDomain.PostulationStatus.ACCEPTED);
-        return postulationRepository.save(postulationDomain);
+        PostulationDomain postulationDomain1 = postulationRepository.save(postulationDomain);
+
+        // 3. Obtener evento y usuario
+        UUID eventId = postulationDomain.getEventId();
+        UUID userId = postulationDomain.getUserId();
+
+
+
+        EventDomain event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+
+        System.out.println("estoy aceptando despues de events "+event.toString());
+
+        UserDomain user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // 4. Agregar usuario al evento
+        event.addUser(user);
+
+        // 5. Guardar evento → aquí se llena la tabla event_user
+        eventRepository.save(event);
+
+        // 6. Retornar resultado
+        return postulationMapperDTO.toDTO(postulationDomain);
     }
 
+
     @Override
-    public PostulationDomain reject(UUID postulationId) {
+    public PostulationDTO reject(UUID postulationId) {
         genericValidationDataStructure.validateDataNotNullOrEmpty(postulationId, "postulation Id");
         PostulationDomain postulationDomain = postulationRepository
                 .findById(postulationId).orElseThrow(()-> new IllegalArgumentException("Postulation does not exist"));
         postulationDomain.setStatus(PostulationDomain.PostulationStatus.REJECTED);
-        return postulationRepository.save(postulationDomain);
+        return postulationMapperDTO.toDTO(postulationRepository.save(postulationDomain));
     }
 
     @Override
-    public List<PostulationDomain> getPostulationsByUser(UUID userId) {
-        return postulationRepository.findByUserId(userId);
+    public List<PostulationDTO> getPostulationsByUser(UUID userId) {
+        return postulationMapperDTO.toDTOList(postulationRepository.findByUserId(userId));
     }
 
     @Override
-    public List<PostulationDomain> getPostulationsByEvent(UUID eventId) {
-        return postulationRepository.findByEventId(eventId);
+    public List<PostulationDTO> getPostulationsByEvent(UUID eventId) {
+        return postulationMapperDTO.toDTOList(postulationRepository.findByEventId(eventId));
     }
 }
