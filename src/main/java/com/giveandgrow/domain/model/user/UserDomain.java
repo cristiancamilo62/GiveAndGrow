@@ -4,10 +4,12 @@ import com.giveandgrow.domain.model.security.Role;
 import com.giveandgrow.shared.helper.ObjectHelper;
 import com.giveandgrow.shared.helper.TextHelper;
 import com.giveandgrow.shared.helper.UuidHelper;
+import lombok.Data;
 import lombok.Getter;
 import java.util.UUID;
 
 @Getter
+@Data
 public class UserDomain {
 
 	private UUID id;

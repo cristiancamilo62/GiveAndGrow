@@ -17,4 +17,5 @@ public interface PostulationRepositoryPort {
     List<PostulationDomain> findByEventId(UUID eventId);
 
     boolean existsByUserIdAndEventId(UUID userId, UUID eventId);
+
 }

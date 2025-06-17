@@ -2,7 +2,7 @@ package com.giveandgrow.infrastructure.adapters.persistence;
 
 import com.giveandgrow.domain.model.user.UserDomain;
 import com.giveandgrow.domain.ports.output.UserRepositoryPort;
-import com.giveandgrow.infrastructure.adapters.persistence.exceptions.IdDoesNotExistInDatabase;
+import com.giveandgrow.infrastructure.adapters.persistence.exceptions.IdDoesNotExistInDatabaseException;
 import com.giveandgrow.infrastructure.adapters.persistence.mapper.UserMapperEntity;
 import com.giveandgrow.infrastructure.entities.UserEntity;
 import com.giveandgrow.infrastructure.repositories.UserJpaRepository;
@@ -29,7 +29,6 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
     public void save(UserDomain user) {
 
         UserEntity userEntity = userMapperEntity.toEntity(user);
-
         userJpaRepository.save(userEntity);
     }
 
@@ -37,7 +36,7 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
     public UserDomain update(UserDomain user) {
 
         if (!this.existsById(user.getId())){
-            throw new IdDoesNotExistInDatabase(
+            throw new IdDoesNotExistInDatabaseException(
                     ID_USER + MessageCatalog.getContentMessage(MessageCode.M0000016),
                     MessageCatalog.getContentMessage(MessageCode.M0000003)
             );
@@ -54,7 +53,7 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
         return userJpaRepository.findById(id)
                 .map(userMapperEntity::toDomain)
                 .or(() -> {
-                    throw new IdDoesNotExistInDatabase(
+                    throw new IdDoesNotExistInDatabaseException(
                             MessageCatalog.getContentMessage(MessageCode.M0000016),
                             MessageCatalog.getContentMessage(MessageCode.M0000003)
                     );
@@ -98,14 +97,13 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
     }
 
     @Override
-    public Optional<UserDomain> findByIdentification(String identification) {
-
-        return  userJpaRepository.findByIdentification(identification).map(userMapperEntity::toDomain);
+    public boolean  existsByIdentification(String identification,UUID id) {
+        return userJpaRepository.existsByIdentificationAndIdNot(identification,id);
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return userJpaRepository.existsByEmail(email);
+    public boolean existsByEmail(String email,UUID id) {
+        return userJpaRepository.existsByEmailAndIdNot(email,id);
     }
 
     @Override

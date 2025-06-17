@@ -8,7 +8,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 import com.giveandgrow.domain.model.organization.OrganizationDomain;
 import com.giveandgrow.domain.ports.output.OrganizationRepositoryPort;
-import com.giveandgrow.infrastructure.adapters.persistence.exceptions.IdDoesNotExistInDatabase;
+import com.giveandgrow.infrastructure.adapters.persistence.exceptions.IdDoesNotExistInDatabaseException;
 import com.giveandgrow.infrastructure.adapters.persistence.mapper.OrganizationMapperEntity;
 import com.giveandgrow.infrastructure.entities.OrganizationEntity;
 import com.giveandgrow.infrastructure.repositories.OrganizationJpaRepository;
@@ -33,7 +33,7 @@ public class OrganizationPersistenceAdapter implements OrganizationRepositoryPor
     @Override
     public OrganizationDomain update(OrganizationDomain organization) {
         if (!this.existsById(organization.getId())) {
-            throw new IdDoesNotExistInDatabase(
+            throw new IdDoesNotExistInDatabaseException(
                 ID_ORGANIZATION + MessageCatalog.getContentMessage(MessageCode.M0000016),
                 MessageCatalog.getContentMessage(MessageCode.M0000003)
             );

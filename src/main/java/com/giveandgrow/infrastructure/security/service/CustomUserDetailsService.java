@@ -17,13 +17,13 @@ import java.util.Map;
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepositoryPort patientRepository;
+    private final UserRepositoryPort patientRepositoryPort;
     private final OrganizationRepositoryPort organizationRepositoryPort;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return patientRepository.findByEmail(username)
+        return patientRepositoryPort.findByEmail(username)
                 .map(user -> new CustomUserDetails(
                         user.getEmail(),
                         user.getPassword(),

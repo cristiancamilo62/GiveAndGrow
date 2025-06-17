@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 import com.giveandgrow.domain.model.event.EventDomain;
 import com.giveandgrow.domain.ports.output.EventRepositoryPort;
-import com.giveandgrow.infrastructure.adapters.persistence.exceptions.IdDoesNotExistInDatabase;
+import com.giveandgrow.infrastructure.adapters.persistence.exceptions.IdDoesNotExistInDatabaseException;
 import com.giveandgrow.infrastructure.adapters.persistence.mapper.EventMapperEntity;
 import com.giveandgrow.infrastructure.entities.EventEntity;
 import com.giveandgrow.infrastructure.entities.OrganizationEntity;
@@ -38,7 +38,7 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
         // 1) Carga la organización (o lanza si no existe)
     OrganizationEntity org = organizationJpaRepository
       .findById(event.getOrganizationId())
-      .orElseThrow(() -> new IdDoesNotExistInDatabase(
+      .orElseThrow(() -> new IdDoesNotExistInDatabaseException(
           "Organization " + MessageCatalog.getContentMessage(MessageCode.M0000016),
           MessageCatalog.getContentMessage(MessageCode.M0000003)
       ));
@@ -61,7 +61,7 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
     public EventDomain update(EventDomain event, UUID userId) {
         // 1) Cargar la entidad existente desde la base de datos
         EventEntity evEntity = eventJpaRepository.findById(event.getId())
-                .orElseThrow(() -> new IdDoesNotExistInDatabase(
+                .orElseThrow(() -> new IdDoesNotExistInDatabaseException(
                         "Event " + MessageCatalog.getContentMessage(MessageCode.M0000016),
                         MessageCatalog.getContentMessage(MessageCode.M0000003)
                 ));
@@ -84,7 +84,7 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
 
         if (isUserIdValid) {
             UserEntity uEntity = userJpaRepository.findById(userId)
-                    .orElseThrow(() -> new IdDoesNotExistInDatabase(
+                    .orElseThrow(() -> new IdDoesNotExistInDatabaseException(
                             "User " + MessageCatalog.getContentMessage(MessageCode.M0000016),
                             MessageCatalog.getContentMessage(MessageCode.M0000003)
                     ));
@@ -106,7 +106,7 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
     @Override
     public void delete(UUID id) {
         if (!this.existsById(id)) {
-            throw new IdDoesNotExistInDatabase(
+            throw new IdDoesNotExistInDatabaseException(
                 ID_EVENT + MessageCatalog.getContentMessage(MessageCode.M0000016),
                 MessageCatalog.getContentMessage(MessageCode.M0000003));
         }
@@ -133,7 +133,7 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
         return eventJpaRepository.findById(id)
                 .map(eventMapperEntity::toDomain)
                 .or(() -> {
-                    throw new IdDoesNotExistInDatabase(
+                    throw new IdDoesNotExistInDatabaseException(
                             ID_EVENT + MessageCatalog.getContentMessage(MessageCode.M0000016),
                             MessageCatalog.getContentMessage(MessageCode.M0000003)
                     );
@@ -149,7 +149,7 @@ public class EventPersistenceAdapter implements EventRepositoryPort{
     @Override
     public List<EventDomain> findAllEventsByUser(UUID userId) {
         UserEntity userEntity = userJpaRepository.findById(userId)
-                .orElseThrow(() -> new IdDoesNotExistInDatabase(
+                .orElseThrow(() -> new IdDoesNotExistInDatabaseException(
                         "User " + MessageCatalog.getContentMessage(MessageCode.M0000016),
                         MessageCatalog.getContentMessage(MessageCode.M0000003)
                 ));

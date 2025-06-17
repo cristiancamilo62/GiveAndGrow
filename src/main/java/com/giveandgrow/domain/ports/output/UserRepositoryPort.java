@@ -21,9 +21,9 @@ public interface UserRepositoryPort {
 
     boolean existsById(UUID id);
 
-    Optional<UserDomain> findByIdentification(String identification);
+    boolean existsByIdentification(String identification,UUID id);
 
-    boolean existsByEmail(String email);
+    boolean existsByEmail(String email,UUID id);
 
     boolean existsByEmailAndPassword(String user, String password);
 

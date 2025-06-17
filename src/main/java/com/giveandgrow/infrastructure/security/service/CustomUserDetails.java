@@ -5,12 +5,9 @@ import java.util.Map;
 import java.util.UUID;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.giveandgrow.domain.model.organization.OrganizationDomain;
 import com.giveandgrow.domain.model.security.Role;
-import com.giveandgrow.domain.model.user.UserDomain;
-
 import lombok.Getter;
+
 
 public class CustomUserDetails implements UserDetails {
 
@@ -31,7 +28,7 @@ public class CustomUserDetails implements UserDetails {
     private final Role role;
 
     @Getter
-    private final Map<String, Object> responseAuth;
+    private final Map<String, Object>   responseAuth;
 
     public CustomUserDetails(
             String email, 

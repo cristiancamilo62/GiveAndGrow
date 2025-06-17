@@ -86,7 +86,7 @@ public final class GenericValidationDataStructure {
 
         if(!ObjectHelper.isEmpty(value)) {
             switch (TextHelper.applyTrim(dataName)) {
-                case "phone number ":
+                case "phone number":
                     validateFormatDataOnlyDigits(value, dataName);
                     break;
                 case "middle name", "middle last name":

@@ -24,6 +24,10 @@ public class UserValidationsRuleExecutor implements GenericValidationRule<UserDo
 
     private final PhoneNumberUserRuleValidator phoneNumberUserRuleValidator;
 
+    private final PhoneReferenceUserRuleValidator phoneReferenceUserRuleValidator;
+
+    private final InstitutionUserRuleValidator institutionUserRuleValidator;
+
    private final UserIdentificationAlreadyExistBusinessRule userIdentificationAlreadyExistBusinessRule;
 
    private final UserEmailAlreadyExistBusinessRule userEmailAlreadyExistBusinessRule;
@@ -43,10 +47,14 @@ public class UserValidationsRuleExecutor implements GenericValidationRule<UserDo
 
         phoneNumberUserRuleValidator.validate(domain.getPhoneNumber());
 
+        phoneReferenceUserRuleValidator.validate(domain.getPhoneOfReference());
+
+        institutionUserRuleValidator.validate(domain.getInstitution());
+
         passwordUserRuleValidator.validate(domain.getPassword());
 
-        userIdentificationAlreadyExistBusinessRule.validate(domain.getIdentification());
+        userIdentificationAlreadyExistBusinessRule.validate(domain);
 
-        userEmailAlreadyExistBusinessRule.validate(domain.getEmail());
+        userEmailAlreadyExistBusinessRule.validate(domain);
     }
 }

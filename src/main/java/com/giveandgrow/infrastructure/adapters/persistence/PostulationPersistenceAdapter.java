@@ -3,9 +3,12 @@ package com.giveandgrow.infrastructure.adapters.persistence;
 
 import com.giveandgrow.domain.model.postulation.PostulationDomain;
 import com.giveandgrow.domain.ports.output.PostulationRepositoryPort;
+import com.giveandgrow.infrastructure.adapters.persistence.exceptions.IdDoesNotExistInDatabaseException;
+import com.giveandgrow.infrastructure.adapters.persistence.exceptions.PostulationAlreadyExistsException;
 import com.giveandgrow.infrastructure.adapters.persistence.mapper.PostulationMapperEntity;
-import com.giveandgrow.infrastructure.entities.PostulationEntity;
 import com.giveandgrow.infrastructure.repositories.PostulationJpaRepository;
+import com.giveandgrow.shared.messages.MessageCatalog;
+import com.giveandgrow.shared.messages.enums.MessageCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,11 +27,7 @@ public class PostulationPersistenceAdapter implements PostulationRepositoryPort 
 
     @Override
     public PostulationDomain save(PostulationDomain domain) {
-
-        PostulationEntity p = postulationMapperEntity.toEntity(domain);
-
-        System.out.println("hola"+p.toString());
-
+        postulationMapperEntity.toEntity(domain);
         return postulationMapperEntity.toDomain(postulationJpaRepository
                 .save(postulationMapperEntity.toEntity(domain)));
     }
@@ -36,7 +35,14 @@ public class PostulationPersistenceAdapter implements PostulationRepositoryPort 
     @Override
     public Optional<PostulationDomain> findById(UUID id) {
         return postulationJpaRepository.findById(id)
-                .map(postulationMapperEntity::toDomain);
+                .map(postulationMapperEntity::toDomain).or
+                        (() -> {
+                                throw new IdDoesNotExistInDatabaseException(
+                                            MessageCatalog.getContentMessage(MessageCode.M0000016),
+                                            MessageCatalog.getContentMessage(MessageCode.M0000003)
+                                    );
+                                }
+                        );
     }
 
     @Override
@@ -57,6 +63,12 @@ public class PostulationPersistenceAdapter implements PostulationRepositoryPort 
 
     @Override
     public boolean existsByUserIdAndEventId(UUID userId, UUID eventId) {
-        return postulationJpaRepository.existsByUserIdAndEventId(userId, eventId);
+        if(postulationJpaRepository.existsByUserIdAndEventId(userId, eventId)){
+            throw new PostulationAlreadyExistsException(
+                    MessageCatalog.getContentMessage(MessageCode.M0000024),
+                    MessageCatalog.getContentMessage(MessageCode.M0000023)
+            );
+        }
+        return false;
     }
 }

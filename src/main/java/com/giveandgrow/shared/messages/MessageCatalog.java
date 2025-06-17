@@ -34,7 +34,8 @@ public class MessageCatalog {
 				"There is no message with the indicated code. The process cannot continue..."));
 
 		addMessage(Message.create(MessageCode.M0000003, MessageType.USER, MessageCategory.ERROR,
-				"An unexpected problem occurred while trying to carry out the desired operation. Please try again and if the problem persists, contact the application administrator."));
+				"The requested resource was not found. It may have been deleted or the identifier is incorrect."));
+
 
 		addMessage(Message.create(MessageCode.M0000004, MessageType.USER, MessageCategory.ERROR,
 				"cannot be null or empty"));
@@ -92,8 +93,14 @@ public class MessageCatalog {
 
 		addMessage(Message.create(MessageCode.M0000022, MessageType.USER, MessageCategory.ERROR,
 				"can only contain letters, numbers, spaces, and basic punctuation (e.g., . , ( ) : ; ¡ ! ¿ ? & \\\" ')."));
-		
 
+		addMessage(Message.create(MessageCode.M0000023, MessageType.USER, MessageCategory.ERROR,
+				"You have already applied to this event. Please wait for a response or check your existing applications."
+		));
+
+		addMessage(Message.create(MessageCode.M0000024, MessageType.TECHNICAL, MessageCategory.ERROR,
+				"A postulation already exists for the given user and event. This violates the unique postulation constraint."
+		));
 	}
     
     private static void addMessage(final Message message) {

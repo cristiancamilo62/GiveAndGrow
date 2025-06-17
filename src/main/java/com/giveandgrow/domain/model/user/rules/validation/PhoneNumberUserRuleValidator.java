@@ -18,7 +18,6 @@ public class PhoneNumberUserRuleValidator implements GenericValidationRule<Strin
 	public void validate(String phoneNumber) {
 
 		genericValidationDataStructure.validateLengthDataOptional(phoneNumber,10,FIELD_NAME_PHONE_NUMBER);
-
 		genericValidationDataStructure.validateFormatDataOptional(phoneNumber,FIELD_NAME_PHONE_NUMBER);
 	}
 }

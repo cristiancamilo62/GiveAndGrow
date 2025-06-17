@@ -65,18 +65,13 @@ public class UserService implements UserServicePort {
     @Override
     public UserDTO updateUser(UserDTO userDTO) {
 
-        System.out.println(userDTO.getInstitution());
-        System.out.println(userDTO.getPhoneOfReference());
-
         UserDomain userDomain = userMapperDTO.toDomain(userDTO);
-
-        System.out.println(userDomain.getInstitution());
-        System.out.println(userDomain.getPhoneOfReference());
-
 
         genericValidationDataStructure.validateDataNotNullOrEmpty(userDomain.getId(),"Id User");
 
+        validationsRuleExecutor.validate(userDomain);
 
+        System.out.println(userDomain.toString());
 
         return userMapperDTO.toDTO(userRepositoryPort.update(userDomain));
 
